@@ -16,15 +16,17 @@ function Generator() {
 
 util.inherits(Generator, ScriptBase);
 
+Generator.prototype.initializePaths = function() {
+  this.localeFilePath = path.join(process.cwd(),
+      '/app/bower_components/angular-i18n' + '/angular-locale_' + this.name + '.js');
+  this.localizedAngularJSPath = path.join(process.cwd(), '/app/scripts/i18n/angular_' + this.name + '.js');
+};
+
 Generator.prototype.createLocalizedAngular = function() {
 
-  var localeFilePath = path.join(process.cwd(),
-          '/app/bower_components/angular-i18n' + '/angular-locale_' + this.name + '.js'),
-      localizedAngularJSPath = path.join(process.cwd(), '/app/scripts/i18n/angular_' + this.name + '.js'),
-      that = this;
+  var that = this;
 
-
-  fs.exists(localeFilePath, function(exists) {
+  fs.exists(this.localeFilePath, function(exists) {
 
     if(!exists) {
       console.error('Sorry "%s" isn\'t a locale supported in this version angular', that.name);
@@ -34,7 +36,7 @@ Generator.prototype.createLocalizedAngular = function() {
           console.error('Sorry something unexpected happened.');
           throw err;
         } else {
-          cat(ngFilePath, localeFilePath).to(localizedAngularJSPath);
+          cat(ngFilePath, that.localeFilePath).to(that.localizedAngularJSPath);
         }
       });
     }
