@@ -1,0 +1,8 @@
+Description
+    Creates an angular.js file containing localization rules for the specified locale.
+
+Example
+    yo angular:i18n fr-ca
+
+    This will create:
+        app/scripts/i18n/angular_fr-ca.js
